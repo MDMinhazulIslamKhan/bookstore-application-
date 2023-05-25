@@ -139,13 +139,18 @@ export const payment = async (req, res) => {
     const token = req?.headers?.authorization;
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
 
-    const { orderId } = req.body;
+    const { orderId, totalAmount } = req.body;
     try {
         if (!mongoose.Types.ObjectId.isValid(orderId)) {
             return res.status(404).send({ message: `No order with this orderId (${orderId})` });
         };
+        const orderDetails = await Order.find({ $and: [{ "customerDetails._id": decoded.id }, { _id: orderId }, { total: totalAmount }] });
+
+        if (orderDetails.length === 0) {
+            return res.status(404).send({ message: 'Wrong information' });
+        }
         await Order.updateOne({
-            $and: [{ "customerDetails._id": decoded.id }, { _id: orderId }]
+            $and: [{ "customerDetails._id": decoded.id }, { _id: orderId }, { total: totalAmount }]
         }, {
             $set: { status: "paid" }
         })
