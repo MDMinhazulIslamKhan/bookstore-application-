@@ -59,5 +59,6 @@
 
 
 
-<!-- ### Admin email: abc@gef.com
-### Admin password: 12345 -->
+## Admin email: **abc@gef.com**
+## Admin password: **12345**
+---
