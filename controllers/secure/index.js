@@ -29,7 +29,10 @@ export const viewBookById = async (req, res) => {
 // add book controller
 export const addBook = async (req, res) => {
     const book = req.body;
-
+    const { title, author, description, ISBN, coverImageUrl, category, price } = book;
+    if (!title || !author || !description || !ISBN || !coverImageUrl || !category || !price) {
+        return res.status(404).send({ message: "You must give book's title, author, description, ISBN, coverImageUrl, category and price" });
+    }
     const newBook = new Book({ ...book })
     try {
         await newBook.save();

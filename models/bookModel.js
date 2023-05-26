@@ -24,7 +24,7 @@ const bookSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
-        enum: ['Fiction', 'Non-fiction', 'Sci-fi', 'Mystery', 'Thriller', "Children's book", "Religious", "History"]
+        enum: ['Fiction', 'Non-fiction', 'Sci-fi', 'Mystery', 'Thriller', "Children's book", "Religious", "History", "Biography"]
     },
     price: {
         type: Number,
