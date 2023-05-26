@@ -127,7 +127,10 @@ export const checkout = async (req, res) => {
         const newOrder = Order({ customerDetails, order, total });
         await newOrder.save();
         await User.updateOne({ "email": decoded.email }, { $unset: { "cart": 1 } })
-        return res.status(200).json({ message: 'Checkout successfully' });
+        return res.status(200).json({
+            message: 'Checkout successfully',
+            orderId: newOrder._id
+        });
     } catch (error) {
         return res.status(409).json({ error });
     }
